@@ -1,15 +1,16 @@
-require("@babel/core").transform("code", {
-    presets: ["@babel/preset-env"],
-  });
-  require("dotenv").config();
+import dotenv from 'dotenv'
+dotenv.config()
+
   // Importing Modules and Packages
   import express from "express";
-  import mongoose from "mongoose";
   import cors from "cors";
   import helmet from "helmet";
 
   // Importing MongoDB Connection
-  import connection from "./database/connection";
+  import connection from "./database/connection.js";
+
+  // Importing Models
+  import {FoodModel,OrderModel} from "./database/allModels.js";
 
   // App
   const app=express();
