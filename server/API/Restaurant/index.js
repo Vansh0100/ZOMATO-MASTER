@@ -12,7 +12,7 @@ const Router = express.Router();
  *Params   None
  * Method  Get
  */
-// http://localhost:4000/restaurant?city=Gonda
+// http://localhost:4000/restaurant/?city=Gonda
 Router.get("/", async (req, res) => {
   try {
     const { city } = req.query;

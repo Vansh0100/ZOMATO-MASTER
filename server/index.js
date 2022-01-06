@@ -12,6 +12,7 @@ dotenv.config()
 //  Importing Routes
   import Auth from "./API/Auth/index.js";
   import Restaurant from "./API/Restaurant/index.js";
+  import Food from "./API/Food/index.js";
   // Importing Models
   import {FoodModel,OrderModel} from "./database/allModels.js";
 
@@ -25,6 +26,7 @@ dotenv.config()
 // Using Routes
   app.use("/auth",Auth);
   app.use("/restaurant",Restaurant);
+  app.use("/foods",Food);
   app.listen(4000,()=>{
     connection().then(()=>{console.log("Server is running!")}).catch((error)=>{console.log("Server is running but database connection failed!");
   console.log(error);
