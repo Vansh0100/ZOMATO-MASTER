@@ -3,6 +3,8 @@ import passport from "passport";
 // Importing Models
 import {UserModel} from "../../database/allModels.js";
 
+// Importing Validations
+import {ValidateSignup,ValidateSignin} from "../../validation/auth.js";
 
 const Router=express.Router();
 
@@ -33,6 +35,7 @@ Router.post("/signup",async(req,res)=>{
     // const token=await jwt.sign({user:{fullname,email}},"ZomatoApp");
 
     try{
+        await ValidateSignup(req.body);
         await UserModel.findByEmailAndPhone(req.body);
     const newUser=await UserModel.create(req.body);
 
@@ -62,6 +65,7 @@ Router.post("/signin",async(req,res)=>{
     // }
     // const token=await jwt.sign({user:{email}},"ZomatoApp");
     try{
+        await ValidateSignin(req.body);
         const user=await UserModel.checkEmailAndPassword(req.body);
         const token=user.generateJwtToken();
         return res.status(200).json({token,status:"SignedIn Successfully"});

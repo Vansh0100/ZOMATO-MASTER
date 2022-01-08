@@ -3,6 +3,9 @@ import express from "express";
 // Importing UserModel
 import {UserModel} from "../../database/allModels.js";
 
+// Importing user validations
+import {ValidateId} from "../../validation/validateId.js";
+
 const Router=express.Router();
 
 /**
@@ -14,6 +17,7 @@ const Router=express.Router();
  */
 Router.get("/:_id",async(req,res)=>{
     try{
+        await ValidateId(req.params);
         const {_id}=req.params;
         const userdata=await UserModel.findById(_id);
         if(userdata==null){
@@ -35,6 +39,7 @@ Router.get("/:_id",async(req,res)=>{
  */
 Router.put("/update/:_id",async(req,res)=>{
     try{
+        await ValidateId(req.params);
         const {_id}=req.params;
         const updateUser=await UserModel.findByIdAndUpdate({_id},req.body,{new:true});
         if(updateUser==null){
@@ -46,3 +51,4 @@ Router.put("/update/:_id",async(req,res)=>{
         return res.status(500).json({error:error.message});
     }
 })
+export default Router;

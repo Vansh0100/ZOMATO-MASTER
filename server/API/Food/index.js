@@ -1,8 +1,11 @@
 import express from "express";
 
 // Importing Food Model
-
 import {FoodModel} from "../../database/allModels.js";
+
+// Importing Food Validation 
+import {ValidateId} from "../../validation/validateId.js";
+import {ValidateFoodSearchedString,ValidateFoodCategory} from "../../validation/food.js";
 
 const Router=express.Router();
 
@@ -16,6 +19,7 @@ const Router=express.Router();
 // http://localhost:4000/foods/f/pizza
 Router.get("/f/:foodname",async(req,res)=>{
     try{
+        await ValidateFoodSearchedString(req.params);
         const {foodname}=req.params;
         const findFoodByName=await FoodModel.find({
             name:{$regex:foodname,$options:"i"}
@@ -39,6 +43,7 @@ Router.get("/f/:foodname",async(req,res)=>{
 // http://localhost:4000/foods/c/cuisines
 Router.get("/c/:category",async(req,res)=>{
     try{
+        await ValidateFoodCategory(req.params);
         const {category}=req.params;
         const findFoodByCategory=await FoodModel.find({
             category:{$regex:category,$options:"i"}
@@ -61,6 +66,7 @@ Router.get("/c/:category",async(req,res)=>{
 */
 Router.get("/r/:_id",async(req,res)=>{
     try{
+        await ValidateId(req.params);
         const {_id}=req.params;
         const findFoodByResId=await FoodModel.find({restaurant:_id});
         if(findFoodByResId==0){

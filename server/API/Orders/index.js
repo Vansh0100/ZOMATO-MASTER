@@ -3,6 +3,9 @@ import express from "express";
 // Importing OrderModel
 import {OrderModel} from "../../database/allModels.js";
 
+// Importing Validation Id
+import {ValidateId} from "../../validation/validateId.js";
+
 const Router=express.Router();
 
 /**
@@ -14,6 +17,7 @@ const Router=express.Router();
  */
 Router.get("/:_id",async(req,res)=>{
     try{
+        await ValidateId(req.params);
         const {_id}=req.params;
         const getOrders=await OrderModel.findOne({user:_id});
         if(getOrders==null){
@@ -34,6 +38,7 @@ Router.get("/:_id",async(req,res)=>{
  */
  Router.post("/new/:_id",async(req,res)=>{
     try{
+        await ValidateId(req.params);
         const {_id}=req.params;
         const addOrders=await OrderModel.findOneAndUpdate({user:_id},req.body,{new:true});
         if(addOrders==null){

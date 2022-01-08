@@ -1,7 +1,10 @@
 import express from "express";
 
-// 
+// Importing Models
 import {MenuModel,ImageModel} from "../../database/allModels.js";
+
+// Importing Menu Validations
+import {ValidateId} from "../../validation/validateId.js";
 
 // Importing Routers
 const Router=express.Router();
@@ -14,6 +17,7 @@ const Router=express.Router();
  */
  Router.get("/list/:_id", async (req, res) => {
     try {
+      await ValidateId(req.params);
       const { _id } = req.params;
       const menus = await MenuModel.findById(_id);
   
@@ -36,6 +40,7 @@ const Router=express.Router();
    */
   Router.get("/image/:_id", async (req, res) => {
     try {
+      await ValidateId(req.params);
       const { _id } = req.params;
       const menuImages = await ImageModel.findOne(_id);
   

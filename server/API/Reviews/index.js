@@ -3,6 +3,9 @@ import express from "express";
 // Importing Review Model
 import {ReviewModel} from "../../database/allModels.js";
 
+// Importing Validation Id
+import {ValidateId} from "../../validation/validateId.js";
+
 const Router=express.Router();
 
 /**
@@ -14,6 +17,7 @@ const Router=express.Router();
  */
 Router.get("/:resid",async(req,res)=>{
     try{
+      await ValidateId(req.params);
         const {resid}=req.params;
         const getAllReviews=await ReviewModel.find({restaurant:resid});
         if(getAllReviews.length==0){
@@ -53,6 +57,7 @@ Router.get("/:resid",async(req,res)=>{
    */
   Router.delete("/delete/:id", async (req, res) => {
     try {
+      await ValidateId(req.params);
       const { _id } = req.params;
   
       await ReviewModel.findByIdAndDelete(_id);
