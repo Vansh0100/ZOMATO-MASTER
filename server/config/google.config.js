@@ -36,6 +36,6 @@ export default (passport)=>{
             }
         )
     )
-    passport.serializeUser((data,done)=>done(null,{...data}));
-    passport.deserializeUser((id,done)=>done(null,id));
+    passport.serializeUser((data,done)=>{done(null,{...data})});
+    passport.deserializeUser((id,done)=>{done(null,id)});
 }
