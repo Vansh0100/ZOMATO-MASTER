@@ -1,5 +1,5 @@
 import express from "express";
-
+import passport from "passport";
 // Importing OrderModel
 import {OrderModel} from "../../database/allModels.js";
 
@@ -15,7 +15,7 @@ const Router=express.Router();
  * Access       Public
  * Method       Get
  */
-Router.get("/:_id",async(req,res)=>{
+Router.get("/:_id",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     try{
         await ValidateId(req.params);
         const {_id}=req.params;
@@ -36,7 +36,7 @@ Router.get("/:_id",async(req,res)=>{
  * Access       Public
  * Method       POST
  */
- Router.post("/new/:_id",async(req,res)=>{
+ Router.post("/new/:_id",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     try{
         await ValidateId(req.params);
         const {_id}=req.params;

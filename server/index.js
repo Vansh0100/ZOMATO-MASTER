@@ -21,7 +21,11 @@ dotenv.config()
   import User from "./API/User/index.js";
 // Importing Google Config
   import GoogleAuthConfig from "./config/google.config.js";
+// Importing Route Config
+  import RouteConfig from "./config/route.config.js";
+
   GoogleAuthConfig(passport);
+  RouteConfig(passport);
   // App
   const app=express();
 
