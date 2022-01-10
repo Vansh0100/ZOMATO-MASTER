@@ -11,7 +11,7 @@ import Homepage from './Pages/Homepage';
 function App() {
   return (
     <>
-    <DefaultHoc path="/" exact  component={Homepage} />
+    <DefaultHoc path="/:type" exact  component={Homepage} />
     </>
   );
 }
