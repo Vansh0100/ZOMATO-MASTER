@@ -1,16 +1,18 @@
 import React from 'react'
-import {Routes,Route} from "react-router-dom"
+import {Route} from "react-router-dom"
 // Importing Layouts
 import DefaultLayout from '../Layouts/default.layout'
 
-function DefaultHoc({component:Component,path,...rest}) {
+function DefaultHoc({component:Component,...rest}) {
     return (
-        <>
-            <Routes>
-                <Route path={path} {...rest} element={<DefaultLayout>
-                        <Component />
-                    </DefaultLayout>} />
-            </Routes>
+        <> <Route
+        {...rest}
+        component={(props) => (
+          <DefaultLayout>
+            <Component {...props} />
+          </DefaultLayout>
+        )}
+      />
         </>
     )
 }

@@ -50,11 +50,11 @@ function DeliveryCarousel() {
     arrows: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    centerPadding: "10px",
+    centerPadding: "60px",
     responsive: [
       {
         breakpoint: 1024,
