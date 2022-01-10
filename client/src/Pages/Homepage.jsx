@@ -13,7 +13,7 @@ function Homepage() {
     {type === "dining" && <Dining />}
         {type === "night" && <NightLife />}
         {type === "nutrition" && <Nutrition />}</div>
-      </>
+        </>
   )
 }
 

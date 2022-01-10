@@ -13,8 +13,8 @@ function DefaultHoc({component:Component,...rest}) {
           </DefaultLayout>
         )}
       />
-        </>
-    )
+      </>
+)
 }
 
 export default DefaultHoc

@@ -10,6 +10,14 @@ import DefaultHoc from './HOC/default.hoc';
 import Homepage from './Pages/Homepage';
 
 
+// Importing HOC
+import DefaultHoc from './HOC/default.hoc';
+
+
+// Importing Pages
+import Homepage from './Pages/Homepage';
+
+
 function App() {
   return (
     <>
