@@ -3,25 +3,12 @@ import { Link } from "react-router-dom";
 import { AiTwotoneStar } from "react-icons/ai";
 
 function RestaurantCard(props) {
-<<<<<<< HEAD
   return (
     <Link to={`/restaurant/${props._id}`} className="w-full md:w-1/2 lg:w-1/3">
       <div className="bg-white p-4 mb-20 w-full rounded-2xl transition duration-700 ease-in-out hover:shadow-lg ">
-        <div className="w-full lg:h-64 relative">
+        <div className="w-full relative">
           <div className=" w-full bottom-4 flex items-end justify-between">
             <div className="flex flex-col gap-2 items-start absolute">
-=======
-  const [image, setImage] = useState({
-    images: [],
-  });
-
-  return (
-    <Link to={`/restaurant/1242523443`} className="w-full">
-      <div className="bg-white p-4 mb-4 w-full rounded-2xl transition duration-700 ease-in-out hover:shadow-lg md:w-1/2 lg:w-1/3">
-        <div className="w-full h-56 lg:h-64 relative">
-          <div className="absolute w-full bottom-4 flex items-end justify-between">
-            <div className="flex flex-col gap-2 items-start">
->>>>>>> e3f9e666ae7a9b152925a28f325cac03bc70aced
               {props.isPro && (
                 <span className="bg-zomato-400 text-white px-2 py-1 rounded text-sm">
                   Pro extra 10% off
@@ -29,20 +16,12 @@ function RestaurantCard(props) {
               )}
               {props.isOff && (
                 <span className="bg-blue-600 text-white px-2 py-1 rounded text-sm">
-<<<<<<< HEAD
                   $250 OFF
-=======
-                  ${`${props.isOff}`} OFF
->>>>>>> e3f9e666ae7a9b152925a28f325cac03bc70aced
                 </span>
               )}
             </div>
             <img
-<<<<<<< HEAD
               src={props.image.images.length && props.image.images[0].location}
-=======
-              src={image.images.length && image.images[0].location}
->>>>>>> e3f9e666ae7a9b152925a28f325cac03bc70aced
               alt="food"
               className="w-full h-full rounded-2xl"
             />
