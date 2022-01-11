@@ -10,7 +10,7 @@ function RestaurantCard(props) {
           <div className=" w-full bottom-4 flex items-end justify-between">
             <div className="flex flex-col gap-2 items-start absolute">
               {props.isPro && (
-                <span className="bg-zomato-400 text-white px-2 py-1 rounded text-sm">
+                <span className="bg-red-400 text-white px-2 py-1 rounded text-sm">
                   Pro extra 10% off
                 </span>
               )}

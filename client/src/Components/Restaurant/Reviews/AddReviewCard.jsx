@@ -24,7 +24,7 @@ function AddReviewCard() {
           <label htmlFor="delivery">Delivery</label>
         </div>
       </div>
-      <button onClick={openModal} className="text-zomato-400">
+      <button onClick={openModal} className="text-red-400">
         Write a review
       </button>
     </>

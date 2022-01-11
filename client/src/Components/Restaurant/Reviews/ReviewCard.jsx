@@ -24,7 +24,7 @@ function ReviewCard(props) {
               </small>
             </div>
           </div>
-          <button className="text-zomato-400 border border-zomato-400 py-2 rounded-lg px-4">
+          <button className="text-red-400 border border-zomato-400 py-2 rounded-lg px-4">
             Follow
           </button>
         </div>

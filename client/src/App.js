@@ -5,7 +5,7 @@ import {Redirect,Route} from "react-router-dom"
 // Importing HOC
 import DefaultHoc from './HOC/default.hoc';
 import RestaurantHOC from './HOC/Restaurant.hoc';
-
+import CheckoutHoc from './HOC/Checkout.hoc';
 
 // Importing Pages
 import Homepage from './Pages/Homepage';
@@ -15,6 +15,7 @@ import OrderOnline from "./Components/Restaurant/OrderOnline";
 import Reviews from './Components/Restaurant/Reviews/Review';
 import Menu from './Components/Restaurant/Menu/Menu';
 import Photos from './Components/Restaurant/Photos/Photos';
+import CheckoutPage from './Pages/CheckoutPage';
 function App() {
   return (
     <>
@@ -50,6 +51,7 @@ function App() {
         exact
         component={Photos}
       />
+      <CheckoutHoc path="/checkout/orders" exact component={CheckoutPage} />
     </>
   );
 }

@@ -84,7 +84,7 @@ function Overview() {
           <div className="flex justify-between items-center">
             <h4 className="text-lg font-medium">Menu</h4>
             <Link to={`/restaurant/${id}/menu`}>
-              <span className="flex items-center gap-1 text-zomato-400">
+              <span className="flex items-center gap-1 text-red-400">
                 See all menu <IoMdArrowDropright />
               </span>
             </Link>

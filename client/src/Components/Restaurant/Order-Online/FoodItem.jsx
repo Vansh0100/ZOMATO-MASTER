@@ -29,7 +29,7 @@ function FoodItem(props) {
             <div className="w-3/4 md:w-7/12 flex flex-col gap-1">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold">{props?.name}</h3>
-                <button className="md:hidden flex items-center gap-2 text-zomato-400 bg-zomato-50 border border-zomato-400 px-2 py-1 rounded-lg">
+                <button className="md:hidden flex items-center gap-2 text-red-400 bg-red-50 border border-zomato-400 px-2 py-1 rounded-lg">
                   {props.isAddedToCart ? (
                     "Added"
                   ) : (
@@ -44,7 +44,7 @@ function FoodItem(props) {
               <p>{props?.description}</p>
             </div>
             <div className="hidden md:block w-2/12">
-              <button className="flex items-center gap-2 text-zomato-400 bg-zomato-50 border border-zomato-400 px-2 py-1 rounded-lg">
+              <button className="flex items-center gap-2 text-red-400 bg-red-50 border border-zomato-400 px-2 py-1 rounded-lg">
                 {props.isAddedToCart ? (
                   "Added"
                 ) : (
