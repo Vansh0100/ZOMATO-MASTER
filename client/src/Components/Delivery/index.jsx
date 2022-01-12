@@ -1,15 +1,10 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import RestaurantCard from "../RestaurantCard";
-=======
-import React from "react";
->>>>>>> e3f9e666ae7a9b152925a28f325cac03bc70aced
 
 // Component
 import DeliveryCarousel from "./DeliveryCarousel";
 
 function Delivery() {
-<<<<<<< HEAD
   const [restaurantList, setRestaurantList] = useState([
     {
       _id: "123456",
@@ -92,11 +87,6 @@ function Delivery() {
           <RestaurantCard {...restaurant} key={restaurant._id} />
         ))}
       </div>
-=======
-  return (
-    <>
-      <DeliveryCarousel />
->>>>>>> e3f9e666ae7a9b152925a28f325cac03bc70aced
     </>
   );
 }

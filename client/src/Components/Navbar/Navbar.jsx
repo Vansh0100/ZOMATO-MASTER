@@ -3,7 +3,10 @@ import {HiLocationMarker} from "react-icons/hi"
 import {FaUserAlt} from "react-icons/fa";
 import {IoMdArrowDropdown} from "react-icons/io";
 import {RiSearch2Line} from "react-icons/ri";
-function NavSm(){
+// Import Components
+import Signup from '../Auth/SignUp';
+import Signin from '../Auth/SignIn';
+function NavSm({Signin,Signup}){
    
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [user, setUser] = useState({});
@@ -48,8 +51,8 @@ function NavSm(){
             </span>
             {isDropDownOpen && (
               <div className="absolute shadow-lg py-3 -bottom-20 -right-4 w-full bg-white z-20 flex flex-col gap-2">
-                <button>Sign In</button>
-                <button>Sign Up</button>
+                <button onClick={Signin}>Sign In</button>
+                <button onClick={Signup}>Sign Up</button>
               </div>
             )}
           </>
@@ -58,7 +61,7 @@ function NavSm(){
     </div>
   );
 }
-function NavLg(){ const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+function NavLg({Signup,Signin}){ const [isDropDownOpen, setIsDropDownOpen] = useState(false);
     const [user, setUser] = useState({});
     return (
       <>
@@ -111,10 +114,10 @@ function NavLg(){ const [isDropDownOpen, setIsDropDownOpen] = useState(false);
               </div>
             ) : (
               <div className=" flex gap-4">
-                <button className="text-gray-500 text-xl hover:text-gray-800">
+                <button className="text-gray-500 text-xl hover:text-gray-800" onClick={Signin}>
                   Login
                 </button>
-                <button className="text-gray-500 text-xl hover:text-gray-800">
+                <button className="text-gray-500 text-xl hover:text-gray-800" onClick={Signup}>
                   Signup
                 </button>
               </div>
@@ -126,11 +129,18 @@ function NavLg(){ const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 }
 
 function Navbar() {
+  const [openSignIn, setOpenSignIn] = useState(false);
+  const [openSignUp, setOpenSignUp] = useState(false);
+
+  const openSignInModal = () => setOpenSignIn(true);
+  const openSignUpModal = () => setOpenSignUp(true);
     return (
         <>
+        <Signin isOpen={openSignIn} setIsOpen={setOpenSignIn} />
+      <Signup isOpen={openSignUp} setIsOpen={setOpenSignUp} />
             <nav className='p-4 flex bg-white shadow-md lg:shadow-none w-full items-center'>
-            <NavSm/>
-            <NavLg/>
+            <NavSm Signin={openSignInModal} Signup={openSignUpModal} />
+            <NavLg Signin={openSignInModal} Signup={openSignUpModal} />
             </nav>
         </>
     )
