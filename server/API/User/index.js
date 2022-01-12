@@ -1,5 +1,5 @@
 import express from "express";
-
+import passport from "passport";
 // Importing UserModel
 import {UserModel} from "../../database/allModels.js";
 
@@ -7,6 +7,25 @@ import {UserModel} from "../../database/allModels.js";
 import {ValidateId} from "../../validation/validateId.js";
 
 const Router=express.Router();
+
+/**
+ * Route        /
+ * Des          GET authorized user data
+ * Params       none
+ * Access       Public
+ * Method       GET
+ */
+ Router.get("/", passport.authenticate("jwt"), async (req, res) => {
+    try {
+      const { email, fullName, phoneNumber, address } =
+        req.session.passport.user._doc;
+  
+      return res.json({ user: { email, fullName, phoneNumber, address } });
+    } catch {
+      return res.status(500).json({ error: error.message });
+    }
+  });
+  
 
 /**
  * Router       /:_id
@@ -20,10 +39,11 @@ Router.get("/:_id",async(req,res)=>{
         await ValidateId(req.params);
         const {_id}=req.params;
         const userdata=await UserModel.findById(_id);
+        const {fullname}=userdata;
         if(userdata==null){
             return res.json({error:`No user data found for user id:${_id}`});
         }
-        return res.status(200).json({userData:userdata});
+        return res.status(200).json({user:{fullname}});
     }
     catch(error){
         return res.status(500).json({error:error.message});

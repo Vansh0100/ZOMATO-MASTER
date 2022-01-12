@@ -5,6 +5,12 @@ import { BsShieldLockFill } from "react-icons/bs";
 import FoodItem from "../Components/Cart/FoodItem";
 import AddressList from "../Components/Checkout/AddressList";
 
+//redux
+import { useSelector } from "react-redux";
+
+// razorpay
+import Razorpay from "razorpay";
+
 function CheckoutPage() {
   const address = [
     {
@@ -21,28 +27,40 @@ function CheckoutPage() {
     },
   ];
 
-  const foods = [
-    {
+  const reduxStateCart = useSelector((globalState) => globalState.cart.cart);
+  const reduxStateUser = useSelector(
+    (globalState) => globalState.user.user.user
+  );
+
+  const payNow = () => {
+    let options = {
+      key: "rzp_test_q1aD8S4CGOEb75",
+      amount:
+        reduxStateCart.reduce(
+          (total, current) => total + current.totalPrice,
+          0
+        ) * 100,
+      currency: "INR",
+      name: "Zomato Master",
+      description: "Fast Delivery Service",
       image:
-        "https://b.zmtcdn.com/data/dish_photos/87c/153beb91af9f43e157f3d6fd6ea2587c.jpg?output-format=webp",
-      name: "Chilli Paneer Gravy",
-      price: "157.50",
-      rating: 4,
-      descript:
-        "Chicken NoodelsChicken Fried Rice+Chilli ChickenChicken Manchurian+Chilli PotatoHoney Chilli Potato+Chicken Chilli Garlic Momos [2 ... read more",
-      quantity: 1,
-    },
-    {
-      image:
-        "https://b.zmtcdn.com/data/dish_photos/87c/153beb91af9f43e157f3d6fd6ea2587c.jpg?output-format=webp",
-      name: "Chilli Paan",
-      price: "157.50",
-      rating: 4,
-      descript:
-        "Chicken NoodelsChicken Fried Rice+Chilli ChickenChicken Manchurian+Chilli PotatoHoney Chilli Potato+Chicken Chilli Garlic Momos [2 ... read more",
-      quantity: 3,
-    },
-  ];
+      "https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png",
+      handler: (data) => {
+        alert("Payment Successful");
+        console.log(data);
+      },
+      prefill: {
+        name: reduxStateUser.fullName,
+        email: reduxStateUser.email,
+      },
+      theme: {
+        color: "#e23744",
+      },
+    };
+
+    let razorPay = new window.Razorpay(options);
+    razorPay.open();
+  };
 
   return (
     <div className="my-3 flex flex-col gap-3 items-center">
@@ -56,7 +74,7 @@ function CheckoutPage() {
             <small>GT Woorld Mall, Magadi Road, NCR Noida</small>
           </div>
           <div className="my-4 h-32 overflow-y-scroll px-4 flex flex-col gap-2 w-full md:w-3/5">
-            {foods.map((food) => (
+            {reduxStateCart?.map((food) => (
               <FoodItem key={food._id} {...food} />
             ))}
           </div>
@@ -65,7 +83,7 @@ function CheckoutPage() {
             <AddressList address={address} />
           </div>
         </div>
-        <button className="flex items-center gap-2 justify-center my-4 md:my-8 w-full px-4 md:w-4/5 h-14 text-white font-medium text-lg bg-red-400 rounded-lg">
+        <button className="flex items-center gap-2 justify-center my-4 md:my-8 w-full px-4 md:w-4/5 h-14 text-white font-medium text-lg bg-red-400 rounded-lg" onClick={payNow}>
           Pay Securely <BsShieldLockFill />
         </button>
       </div>

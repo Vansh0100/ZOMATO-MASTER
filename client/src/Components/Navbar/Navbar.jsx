@@ -3,13 +3,19 @@ import {HiLocationMarker} from "react-icons/hi"
 import {FaUserAlt} from "react-icons/fa";
 import {IoMdArrowDropdown} from "react-icons/io";
 import {RiSearch2Line} from "react-icons/ri";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../../redux/reducers/auth/auth.action";
+
 // Import Components
 import Signup from '../Auth/SignUp';
 import Signin from '../Auth/SignIn';
 function NavSm({Signin,Signup}){
    
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [user, setUser] = useState({});
+  const reduxState = useSelector((globalState) => globalState.user.user.user);
+  const dispatch = useDispatch();
   return (
     <div className="flex w-full items-center justify-between lg:hidden">
       <div className="w-28">
@@ -23,7 +29,7 @@ function NavSm({Signin,Signup}){
         <button className="bg-red-400 text-white py-2 px-3 rounded-full">
           Use App
         </button>
-        {user?.fullName ? (
+        {reduxState?.fullName ? (
           <>
             <div
               onClick={() => setIsDropDownOpen((prev) => !prev)}
@@ -37,7 +43,7 @@ function NavSm({Signin,Signup}){
             </div>
             {isDropDownOpen && (
               <div className="absolute shadow-lg py-3 -bottom-20 -right-4 w-full bg-white z-20 flex flex-col gap-2">
-                <button>Sign Out</button>
+                <button onClick={() => dispatch(signOut())}>Sign Out</button>
               </div>
             )}
           </>
@@ -62,7 +68,8 @@ function NavSm({Signin,Signup}){
   );
 }
 function NavLg({Signup,Signin}){ const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-    const [user, setUser] = useState({});
+  const reduxState = useSelector((globalState) => globalState.user.user.user);
+  const dispatch = useDispatch();
     return (
       <>
         <div className="hidden lg:inline container px-20 mx-auto">
@@ -94,7 +101,7 @@ function NavLg({Signup,Signin}){ const [isDropDownOpen, setIsDropDownOpen] = use
                 />
               </div>
             </div>
-            {user?.fullName ? (
+            {reduxState?.fullName ? (
               <div className="relative w-20">
                 <div
                   onClick={() => setIsDropDownOpen((prev) => !prev)}
@@ -108,7 +115,7 @@ function NavLg({Signup,Signin}){ const [isDropDownOpen, setIsDropDownOpen] = use
                 </div>
                 {isDropDownOpen && (
                   <div className="absolute shadow-lg py-3 -bottom-20 -right-4 w-full bg-white z-20 flex flex-col gap-2">
-                    <button>Sign Out</button>
+                    <button  onClick={() => dispatch(signOut())}>Sign Out</button>
                   </div>
                 )}
               </div>
