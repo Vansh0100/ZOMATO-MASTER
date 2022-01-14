@@ -1,5 +1,5 @@
 import express from "express";
-
+import passport from "passport";
 // Importing Review Model
 import {ReviewModel} from "../../database/allModels.js";
 
@@ -17,13 +17,13 @@ const Router=express.Router();
  */
 Router.get("/:resid",async(req,res)=>{
     try{
-      await ValidateId(req.params);
+      // await ValidateId(req.params);
         const {resid}=req.params;
         const getAllReviews=await ReviewModel.find({restaurant:resid});
         if(getAllReviews.length==0){
             return res.json({error:`No reviews found for restaurant id:${resid}`});
         }
-        return res.status(200).json({reviews:getAllReviews});
+        return res.status(200).json({getAllReviews});
     }
     catch(error){
         return res.status(500).json({error:error.message});
@@ -36,11 +36,12 @@ Router.get("/:resid",async(req,res)=>{
  * Access       Public
  * Method       POST
  */
- Router.post("/new", async (req, res) => {
+ Router.post("/new", passport.authenticate("jwt"),async (req, res) => {
     try {
-      const { reviewData } = req.body;
+      const { _id } = req.session.passport.user._doc;
+      const { reviewData } = req.body.credentials;
   
-      await ReviewModel.create({ ...reviewData });
+      await ReviewModel.create({ ...reviewData,user:_id });
   
       return res.json({ reviews: "Successfully Created Review" });
     } catch (error) {
@@ -57,7 +58,7 @@ Router.get("/:resid",async(req,res)=>{
    */
   Router.delete("/delete/:id", async (req, res) => {
     try {
-      await ValidateId(req.params);
+      // await ValidateId(req.params);
       const { _id } = req.params;
   
       await ReviewModel.findByIdAndDelete(_id);

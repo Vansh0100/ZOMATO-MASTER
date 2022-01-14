@@ -2,18 +2,28 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
+// redux
+import { useDispatch } from "react-redux";
+import { signIn } from "../../redux/reducers/auth/auth.action";
+import {getMySelf} from "../../redux/reducers/user/user.action"
 function Signin({ isOpen, setIsOpen }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+  const submit = () => {
+    dispatch(signIn(userData));
+    setUserData({ email: "", password: "" });
+    closeModal();
+    
   };
 
   const googleSignIn = () =>
@@ -95,7 +105,7 @@ function Signin({ isOpen, setIsOpen }) {
                     </div>
                     <div
                       className="w-full text-center bg-red-400 text-white py-2 rounded-lg"
-                      onClick={closeModal}
+                      onClick={submit}
                     >
                       Sign In
                     </div>

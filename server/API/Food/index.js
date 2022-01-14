@@ -9,6 +9,24 @@ import {ValidateFoodSearchedString,ValidateFoodCategory} from "../../validation/
 
 const Router=express.Router();
 
+/**
+ * Route        /:_id
+ * Des          GET food based on id
+ * Params       _id
+ * Access       Public
+ * Method       GET
+ */
+ Router.get("/:_id", async (req, res) => {
+    try {
+      const { _id } = req.params;
+      const foods = await FoodModel.findById(_id);
+      return res.json({ foods });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });
+  
+
 /*
 * Route  /f/:foodname
 * Descp  Getting foods based on the searched name
@@ -27,7 +45,7 @@ Router.get("/f/:foodname",async(req,res)=>{
         if(findFoodByName.length==0){
             return res.json({error:`No Food matches with name ${foodname}`});
         }
-        return res.status(200).json(findFoodByName);
+        return res.status(200).json({findFoodByName});
     }
     catch(error){
         return res.status(500).json({error:error.message});
@@ -51,7 +69,7 @@ Router.get("/c/:category",async(req,res)=>{
         if(findFoodByCategory.length==0){
             return res.json({error:`No Food matches with category ${category}`});
         }
-        return res.status(200).json(findFoodByCategory);
+        return res.status(200).json({findFoodByCategory});
     }
     catch(error){
         return res.status(500).json({error:error.message});
@@ -72,7 +90,7 @@ Router.get("/r/:_id",async(req,res)=>{
         if(findFoodByResId==0){
             return res.json({error:`No foods found for restauatnt id:${_id}`});
         }
-        return res.status(200).json(findFoodByResId);
+        return res.status(200).json({findFoodByResId});
     }
     catch(error){
         return res.status(500).json({error:error.message});

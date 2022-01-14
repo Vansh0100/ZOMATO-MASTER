@@ -17,7 +17,7 @@ const Router=express.Router();
  */
 Router.get("/:_id",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     try{
-        await ValidateId(req.params);
+        // await ValidateId(req.params);
         const {_id}=req.params;
         const getOrders=await OrderModel.findOne({user:_id});
         if(getOrders==null){
@@ -38,9 +38,10 @@ Router.get("/:_id",passport.authenticate('jwt',{session:false}),async(req,res)=>
  */
  Router.post("/new/:_id",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     try{
-        await ValidateId(req.params);
+        // await ValidateId(req.params);
         const {_id}=req.params;
-        const addOrders=await OrderModel.findOneAndUpdate({user:_id},req.body,{new:true});
+        
+        const addOrders=await OrderModel.findOneAndUpdate({user:_id},req.body.credentials,{new:true});
         if(addOrders==null){
             return res.json({error:`Id:${_id} not found!`});
         }

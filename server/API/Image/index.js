@@ -48,10 +48,24 @@ Router.post("/",upload.single('file'),async (req,res)=>{
             )
         }
         const uploadImage=await s3Upload(bucketOptions);
-        return res.status(200).json({uploadImage});
+        const saveImageToDatabase = await ImageModel.create({
+            images: [{ location: uploadImage.Location }],
+          });
+        return res.status(200).json({saveImageToDatabase});
     }
     catch(error){
         return res.status(500).json({error:error.message});
     }
-})
+});
+Router.get("/:_id", async (req, res) => {
+    try {
+      const { _id } = req.params;
+      const image = await ImageModel.findById(_id);
+  
+      return res.status(200).json(image);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });
+  
 export default Router;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoMdArrowDropright } from "react-icons/io";
 import Slider from "react-slick";
@@ -11,39 +11,36 @@ import MenuSimilarRestaurantCard from "./MenuSimilarRestaurantCard";
 import ReviewCard from "./Reviews/ReviewCard";
 import MapView from "./MapView";
 
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { getImage } from "../../redux/reducers/image/image.action";
+import { getReviews } from "../../redux/reducers/review/review.action";
+
 function Overview() {
   const [menuImages, setMenuImages] = useState({
-    images: [
-      "https://b.zmtcdn.com/data/menus/506/19119506/2d28e4999d61f37c8a19e852284abfbf.jpg",
-      "https://b.zmtcdn.com/data/menus/506/19119506/57f429b03c18238a20e583aaaf247834.jpg",
-      "https://b.zmtcdn.com/data/menus/506/19119506/5deb7f5c08dd9c554fe86d4e2fa0a782.jpg",
-    ],
+    images: [],
   });
-  const [reviews, setReviews] = useState([
-    {
-      isRestaurantReview: false,
-      createAt: "2020-05-01",
-      fullName: "John Doe",
-      reviewText: "Food was good, but service was slow",
-    },
-    {
-      isRestaurantReview: false,
-      createAt: "2020-09-01",
-      fullName: "John Doe",
-      reviewText: "Food was good, but service was slow",
-    },
-    {
-      isRestaurantReview: false,
-      createAt: "2021-05-01",
-      fullName: "John Doe",
-      reviewText: "Food was good, but service was slow",
-    },
-  ]);
-  const [cuisine, setCuisine] = useState(["Modern Indian", "Bar Food"]);
-  const averageCost = 200;
+  const [reviews, setReviews] = useState([]);
 
   const { id } = useParams();
+  const reduxState = useSelector(
+    (globalState) => globalState.restaurant.selectedRestaurant.restaurant
+  );
+  console.log(reduxState)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (reduxState) {
+      dispatch(getImage(reduxState?.menuImages)).then((data) => {
+        const images = [];
 
+        data.payload.images.map(({ location }) => images.push(location));
+        setMenuImages(images);
+      });
+      dispatch(getReviews(reduxState?._id)).then((data) =>
+        setReviews(data.payload.reviews)
+      );
+    }
+  }, [reduxState]);
   const settings = {
     dots: true,
     infinite: false,
@@ -92,13 +89,13 @@ function Overview() {
           <div className="flex flex-wrap gap-3 my-4">
             <MenuCollection
               menuTitle="Menu"
-              pages="3"
-              image={menuImages.images}
+              pages={menuImages.length}
+              image={menuImages}
             />
           </div>
           <h4 className="text-lg font-medium my-4">Cuisines</h4>
           <div className="flex flex-wrap gap-2">
-            {cuisine.map((cuisineName, index) => (
+            {reduxState?.cuisine.map((cuisineName, index) => (
               <span
                 key={index}
                 className="border border-gray-600 text-blue-600 px-2 py-1 rounded-full"
@@ -109,7 +106,7 @@ function Overview() {
           </div>
           <div className="my-4">
             <h4 className="text-lg font-medium">Average Cost</h4>
-            <h6>${averageCost} for one order (approx.)</h6>
+            <h6>${reduxState?.averageCost} for one order (approx.)</h6>
             <small className="text-gray-500">
               Exclusive of applicable taxes and cahrges, if any
             </small>
@@ -126,7 +123,7 @@ function Overview() {
                 size={24}
                 activeColor="#ffd700"
               />
-              {reviews.map((review, index) => (
+              {reduxState?.reviews.map((review, index) => (
                 <ReviewCard {...review} key={index} />
               ))}
             </div>

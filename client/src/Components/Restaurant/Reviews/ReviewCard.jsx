@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { TiStarFullOutline } from "react-icons/ti";
 import dayjs from "dayjs";
 
-function ReviewCard(props) {
-  const [user, setUser] = useState("Aditya Gusain");
+// Redux
+import { useDispatch } from "react-redux";
+import { getUser } from "../../../redux/reducers/user/user.action";
 
+function ReviewCard(props) {
+  const [user, setUser] = useState("Vansh Jaiswal");
+  console.log(props)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (props) {
+      console.log(props.user)
+      dispatch(getUser(props.user)).then((data) => {
+        setUser(data.payload.user.fullname);
+      });
+    }
+  }, []);
   return (
     <>
       <div className="my-3 flex flex-col gap-3">
@@ -18,7 +31,7 @@ function ReviewCard(props) {
               />
             </div>
             <div className="flex flex-col">
-              <h3 className="text-lg font-semibold">{props.fullName}</h3>
+              <h3 className="text-lg font-semibold">{user}</h3>
               <small className="text-gray-500">
                 5 Reviews &#8226; 3 Followers
               </small>
@@ -31,7 +44,7 @@ function ReviewCard(props) {
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <span className="text-white text-xs bg-green-700 px-2 py-1 rounded-lg flex items-center gap-1">
-              3 <TiStarFullOutline />
+              {props.rating} <TiStarFullOutline />
             </span>
             <h5 className="font-regular uppercase">
               {props.isRestaurantReview ? "Dining" : "Delivery"}

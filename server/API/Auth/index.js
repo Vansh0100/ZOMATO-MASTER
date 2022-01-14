@@ -19,7 +19,7 @@ const Router=express.Router();
  */
 
 Router.post("/signup",async(req,res)=>{
-    // const {email,phoneNumber,password,fullname}=req.body;
+    // const {email,phoneNumber,password,fullname}=req.body.credentials;
 
     // const checkEmail=await UserModel.findOne({email});
     // const checkPhoneNumber=await UserModel.findOne({phoneNumber});
@@ -30,14 +30,14 @@ Router.post("/signup",async(req,res)=>{
     // const salting=await bcryptjs.genSalt(8);
     // const hashedPassword=await bcryptjs.hash(password,salting);
 
-    // await UserModel.create({...req.body,password:hashedPassword});
+    // await UserModel.create({...req.body.credentials,password:hashedPassword});
 
     // const token=await jwt.sign({user:{fullname,email}},"ZomatoApp");
 
     try{
-        await ValidateSignup(req.body);
-        await UserModel.findByEmailAndPhone(req.body);
-    const newUser=await UserModel.create(req.body);
+        await ValidateSignup(req.body.credentials);
+        await UserModel.findByEmailAndPhone(req.body.credentials);
+    const newUser=await UserModel.create(req.body.credentials);
 
     const token=newUser.generateJwtToken();
     return res.status(200).json({token,status:"SignedUp Successfully"});
@@ -54,7 +54,7 @@ Router.post("/signup",async(req,res)=>{
 * Method   Post
 */
 Router.post("/signin",async(req,res)=>{
-    // const {email,password}=req.body;
+    // const {email,password}=req.body.credentials;
     // const findByEmail=await UserModel.findOne({email});
     // if(!findByEmail){
     //     return res.json({error:"User doesn't exist"});
@@ -65,8 +65,8 @@ Router.post("/signin",async(req,res)=>{
     // }
     // const token=await jwt.sign({user:{email}},"ZomatoApp");
     try{
-        await ValidateSignin(req.body);
-        const user=await UserModel.checkEmailAndPassword(req.body);
+        // await ValidateSignin(req.body.credentials);
+        const user=await UserModel.checkEmailAndPassword(req.body.credentials);
         const token=user.generateJwtToken();
         return res.status(200).json({token,status:"SignedIn Successfully"});
     }
@@ -102,7 +102,9 @@ Router.get("/google/callback",passport.authenticate("google",
     }
 ),
     (req,res)=>{
-        return res.status(200).json({token:req.session.passport.user.token,status:"Success"});
+        return res.redirect(
+            `http://localhost:3000/google/${req.session.passport.user.token}`
+          );
     }
 )
 export default Router;

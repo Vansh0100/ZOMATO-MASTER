@@ -3,11 +3,14 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 const UserSchema=new mongoose.Schema(
     {
-        fullname:{type:String,required:true},
-        email:{type:String,required:true},
+        fullname:{type:String},
+        email:{type:String},
         password:{type:String},
         address:[{detail:{type:String},for:{type:String}}],
         phoneNumber:[{type:Number,maxlength:10}]
+    },
+    {
+        timestamps:true,
     }
 )
 UserSchema.methods.generateJwtToken=function(){

@@ -17,7 +17,7 @@ const Router=express.Router();
  */
  Router.get("/list/:_id", async (req, res) => {
     try {
-      await ValidateId(req.params);
+      // await ValidateId(req.params);
       const { _id } = req.params;
       const menus = await MenuModel.findById(_id);
   
@@ -38,9 +38,9 @@ const Router=express.Router();
    * Access       Public
    * Method       GET
    */
-  Router.get("/image/:_id", async (req, res) => {
+  Router.get("/list/:_id", async (req, res) => {
     try {
-      await ValidateId(req.params);
+      // await ValidateId(req.params);
       const { _id } = req.params;
       const menuImages = await ImageModel.findOne(_id);
   

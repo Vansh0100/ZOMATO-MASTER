@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 
-
 const OrderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Types.ObjectId, required: true, ref: "Users" },
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "Users",
+    },
     orderDetails: [
       {
         food: { type: mongoose.Types.ObjectId, ref: "Foods" },
@@ -14,6 +16,7 @@ const OrderSchema = new mongoose.Schema(
           itemTotal: { type: Number, required: true },
           promo: { type: Number, required: true },
           tax: { type: Number, required: true },
+          razorpay_payment_id: { type: String, required: true },
         },
       },
     ],

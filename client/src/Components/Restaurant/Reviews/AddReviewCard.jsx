@@ -7,7 +7,12 @@ function AddReviewCard() {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
-    setIsOpen(true);
+    if (!localStorage.zomatoUser) {
+      return alert("Please sign in to post a review");
+    }
+   else{
+     setIsOpen(true);
+   }
   };
 
   return (

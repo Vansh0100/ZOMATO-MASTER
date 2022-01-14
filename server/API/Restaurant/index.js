@@ -62,8 +62,8 @@ Router.get("/:_id", async (req, res) => {
  */
 Router.get("/search",async(req,res)=>{
     try{
-      await ValidateRestaurantSearchedString(req.body);
-        const {searchString}=req.body;
+      await ValidateRestaurantSearchedString(req.body.credentials);
+        const {searchString}=req.body.credentials;
         const findRestByString=await RestaurantModel.find(
             {
                 name:{$regex:searchString,$options:"i"},

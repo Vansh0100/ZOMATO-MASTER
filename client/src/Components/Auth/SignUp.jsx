@@ -2,13 +2,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
+// redux
+import { useDispatch } from "react-redux";
+import { signUp } from "../../redux/reducers/auth/auth.action";
+import {getMySelf} from "../../redux/reducers/user/user.action"
 function Signup({ isOpen, setIsOpen }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    fullName: "",
+    fullname: "",
   });
-
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -16,7 +20,12 @@ function Signup({ isOpen, setIsOpen }) {
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  const submit = () => {
+    dispatch(signUp(userData));
+    setUserData({ email: "", password: "", fullname: "" });
+    closeModal();
+    
+  };
   const googleSignUp = () =>
     (window.location.href = "http://localhost:4000/auth/google");
 
@@ -73,11 +82,11 @@ function Signup({ isOpen, setIsOpen }) {
 
                   <form className="flex flex-col gap-2">
                     <div className="w-full flex flex-col gap-2">
-                      <label htmlFor="fullName">Full Name</label>
+                      <label htmlFor="fullname">Full Name</label>
                       <input
                         type="text"
-                        id="fullName"
-                        value={userData.fullName}
+                        id="fullname"
+                        value={userData.fullname}
                         onChange={handleChange}
                         placeholder="John Doe"
                         className="w-full border border-gray-400 px-3 py-2 rounded-lg focus:border-zomato-400"
@@ -107,7 +116,7 @@ function Signup({ isOpen, setIsOpen }) {
                     </div>
                     <div
                       className="w-full text-center bg-red-400 text-white py-2 rounded-lg"
-                      onClick={closeModal}
+                      onClick={submit}
                     >
                       Sign Up
                     </div>
@@ -122,4 +131,4 @@ function Signup({ isOpen, setIsOpen }) {
   );
 }
 
-export default Signup; 
+export default Signup;
