@@ -39,7 +39,11 @@ Router.get("/:resid",async(req,res)=>{
  Router.post("/new", passport.authenticate("jwt"),async (req, res) => {
     try {
       const { _id } = req.session.passport.user._doc;
+<<<<<<< HEAD
       const { reviewData } = req.body.credentials;
+=======
+      const { reviewData } = req.body;
+>>>>>>> 213607127fb7068282dc0612668131f395296f2d
   
       await ReviewModel.create({ ...reviewData,user:_id });
   

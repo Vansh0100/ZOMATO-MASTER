@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import RestaurantCard from "../RestaurantCard";
 
 // Component
 import DeliveryCarousel from "./DeliveryCarousel";
+import RestaurantCard from "../RestaurantCard";
 
 function Delivery() {
   const [restaurantList, setRestaurantList] = useState([]);

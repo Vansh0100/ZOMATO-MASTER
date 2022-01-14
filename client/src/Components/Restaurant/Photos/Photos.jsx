@@ -4,7 +4,6 @@ import ImageViewer from "react-simple-image-viewer";
 // component
 import PhotoCollection from "./PhotoCollection";
 
-
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { getImage } from "../../../redux/reducers/image/image.action";

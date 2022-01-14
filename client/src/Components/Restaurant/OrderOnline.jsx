@@ -33,7 +33,6 @@ function OrderOnline() {
         setMenu(data.payload.menus.menus);
       });
   }, [reduxState]);
-
   return (
     <>
       <div className="w-full h-screen flex">
