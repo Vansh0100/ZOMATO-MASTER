@@ -1,0 +1,19 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY ./package.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV MONGO_URL=mongodb+srv://VanshJaiswal:vansh123@zomato-master.53nyq.mongodb.net/ZOMATO-MASTER?retryWrites=true&w=majority
+ENV GOOGLE_CLIENT_ID=804895845004-dg7n6f4boajblvnn7cfr93lpoflch6hd.apps.googleusercontent.com
+ENV GOOGLE_CLIENT_SECRET=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
+ENV AWS_ACCESS_KEY_ID=AKIA3INKDJUPO55VDC6S
+ENV AWS_SECRET_ACCESS_KEY=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
+ENV NODE_ENV=production
+ENV PORT=4000
+RUN npm run build
+CMD ["npm", "run", "start"]
