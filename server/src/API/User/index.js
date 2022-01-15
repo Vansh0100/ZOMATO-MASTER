@@ -27,6 +27,25 @@ Router.get("/", passport.authenticate("jwt"), async (req, res) => {
 });
 
 /**
+ * Route        /
+ * Des          GET authorized user data
+ * Params       none
+ * Access       Public
+ * Method       GET
+ */
+ Router.get("/", passport.authenticate("jwt"), async (req, res) => {
+    try {
+      const { email, fullName, phoneNumber, address } =
+        req.session.passport.user._doc;
+  
+      return res.json({ user: { email, fullName, phoneNumber, address } });
+    } catch {
+      return res.status(500).json({ error: error.message });
+    }
+  });
+  
+
+/**
  * Router       /:_id
  * Des          Get user data
  * Params       _id

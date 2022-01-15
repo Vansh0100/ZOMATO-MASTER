@@ -1,0 +1,43 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3080:80"
+    depends_on:
+      - nodeserver
+      - client
+    nodeserver:
+      restart: always
+      build:
+        dockerfile: Dockerfile.dev
+        context: ./server/
+      volumes:
+      - /app/node_modules
+      - ./server:/app
+      environment:
+       - MONGO_URL=mongodb+srv://VanshJaiswal:vansh123@zomato-master.53nyq.mongodb.net/ZOMATO-MASTER?retryWrites=true&w=majority
+       - GOOGLE_CLIENT_ID=804895845004-dg7n6f4boajblvnn7cfr93lpoflch6hd.apps.googleusercontent.com
+       - GOOGLE_CLIENT_SECRET=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
+       - AWS_ACCESS_KEY_ID=AKIA3INKDJUPO55VDC6S
+       - AWS_SECRET_ACCESS_KEY=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
+      ports:
+        -"4000:4000"
+
+    client: 
+      build:
+        dockerfile: Dockerfile
+        context: ./client
+      volumes:
+        - /app/node_modules
+        - ./client:/app
+      ports: 
+        - "3000:3000"
+
+
+
+
+  
